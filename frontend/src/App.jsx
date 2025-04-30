@@ -130,7 +130,11 @@ function App() {
                             <MainLayout userInfo={userInfo} onLogout={handleLogout} /> :
                             <Navigate to="/login" replace />
                     }
-                />
+                >
+                    <Route path="/" element={<div>home</div>} />
+                    <Route path="/downloads" element={<div>downloads</div>} />
+                    <Route path="/settings" element={<div>setting</div>} />
+                </Route>
             </Routes>
         </Router>
     );

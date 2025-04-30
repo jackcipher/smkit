@@ -12,6 +12,7 @@ import (
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"github.com/wailsapp/wails/v2/pkg/options/mac"
 	"smkit/src/svc"
 )
 
@@ -44,9 +45,12 @@ func main() {
 			},
 		},
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
-		OnStartup:        app.startup,
+		Mac: &mac.Options{
+			TitleBar: mac.TitleBarHidden(),
+		},
+		OnStartup: app.startup,
 		OnShutdown: func(ctx context.Context) {
-			os.RemoveAll(svc.GetRootDir())
+			_ = os.RemoveAll(svc.GetRootDir())
 		},
 		Bind: []interface{}{
 			app,

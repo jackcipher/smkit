@@ -1,25 +1,41 @@
 import {useEffect, useRef, useState} from "react";
+import "./header.css"
+import {WindowToggleMaximise} from "../../../wailsjs/runtime/runtime.js";
 function Header({userInfo, onLogout }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef(null);
+    const headerRef = useRef(null); // Add this line to create a reference for the header
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
     useEffect(() => {
-        console.log("userInfo.home");
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
                 setMenuOpen(false);
             }
         };
+
+        // 窗口最大化事件
+        const handleDoubleClick = () => {
+            WindowToggleMaximise()
+        };
+
+        // Apply the event listener to the header element
+        if (headerRef.current) {
+            headerRef.current.addEventListener('dblclick', handleDoubleClick);
+        }
+
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
+            if (headerRef.current) {
+                headerRef.current.removeEventListener('dblclick', handleDoubleClick);
+            }
         };
     }, []);
 
     return (
-        <div className="w-full bg-white shadow-sm px-6 flex justify-end items-center">
+        <div ref={headerRef} className="dragable select-none w-full bg-white px-6 flex justify-end items-center" >
             <div className="relative" ref={menuRef}>
                 <div
                     className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 rounded-md py-2 px-3 transition-colors duration-200"

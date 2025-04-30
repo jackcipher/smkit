@@ -1,14 +1,21 @@
 import Header from "./Header.jsx";
+import {Outlet} from "react-router-dom";
+import Sidebar from "../components/Sidebar.jsx";
 
 function MainLayout({userInfo, onLogout }) {
     return (
-        <div className="home-container">
-            <Header userInfo={userInfo} onLogout={onLogout} />
+        <div className="flex h-screen bg-gray-100">
+            <Sidebar />
+            <div className="flex flex-col flex-1 overflow-hidden">
+                {/* 顶部用户信息栏 */}
+                <Header userInfo={userInfo} onLogout={onLogout}/>
 
-            <div className="main-content">
-                <h1>Welcome, {userInfo?.name || 'User'}</h1>
-
+                {/* 主内容区 */}
+                <main className="flex-1 overflow-y-auto p-6">
+                    <Outlet/>
+                </main>
             </div>
+
         </div>
     );
 }

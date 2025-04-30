@@ -1,0 +1,4 @@
+.dragable {
+    --wails-draggable:drag;
+    user-select: none;
+}
