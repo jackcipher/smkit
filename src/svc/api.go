@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
+	"path/filepath"
 
 	"resty.dev/v3"
 )
@@ -26,7 +28,7 @@ func NewSMApi(host string, sid string) SMApi {
 	}).
 		SetHeader("X-Requested-With", "SOS 2.0").
 		SetHeader("Referer", "https://shimo.im/").
-		SetDebug(true)
+		SetDebug(false)
 
 	return c
 }
@@ -66,9 +68,14 @@ func (c *ImplSMApi) Me() (*RespUserMe, error) {
 	if meErr.ErrorCode != 0 {
 		return nil, fmt.Errorf("errorCode: %d %s", meErr.ErrorCode, meErr.Error)
 	}
-	if resp, err := c.cli.SetRedirectPolicy(resty.NoRedirectPolicy()).R().SetDoNotParseResponse(true).Get(me.Avatar); err == nil {
-		location := resp.Header().Get("Location")
-		me.Avatar = location
+	if resp, err := c.cli.R().SetDebug(false).Get(me.Avatar); err == nil {
+		if resp != nil {
+			avatarPath := fmt.Sprintf("%d.webp", me.ID)
+			if f, err := os.Create(filepath.Join(GetAvatarsDir(), avatarPath)); err == nil {
+				f.Write(resp.Bytes())
+				me.Avatar = filepath.Join("avatars", avatarPath)
+			}
+		}
 	}
 	return &me, nil
 }

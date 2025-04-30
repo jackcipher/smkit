@@ -25,8 +25,7 @@ function Header({userInfo, onLogout }) {
                     className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 rounded-md py-2 px-3 transition-colors duration-200"
                     onClick={toggleMenu}
                 >
-                    <img src={"data:image/png;base64," + userInfo.avatar}
-                         className="w-6 h-6 rounded-full object-cover mr-2" alt="User avatar"/>
+                    <img src={userInfo.avatar} className="w-6 h-6 rounded-full object-cover mr-2" alt="User avatar"/>
                     <span className="text-gray-800 font-medium">{userInfo?.name || 'User'}</span>
                     <svg
                         className={`w-4 h-4 text-gray-600 transition-transform duration-200 ${menuOpen ? 'transform rotate-180' : ''}`}
