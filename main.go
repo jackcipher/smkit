@@ -26,8 +26,8 @@ func main() {
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "smkit",
-		Width:  1024,
-		Height: 768,
+		Width:  600,
+		Height: 360,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 			Middleware: func(next http.Handler) http.Handler {

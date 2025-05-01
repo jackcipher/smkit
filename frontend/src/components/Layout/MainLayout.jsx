@@ -1,11 +1,18 @@
 import Header from "./Header.jsx";
 import {Outlet} from "react-router-dom";
-import Sidebar from "../components/Sidebar.jsx";
+import Sidebar from "./Sidebar.jsx";
+import {useEffect} from "react";
+import {SetMainLayoutWindow} from "../../utils/window.js";
 
-function MainLayout({userInfo, onLogout }) {
+function MainLayout({userInfo, onLogout}) {
+
+    useEffect(() => {
+        SetMainLayoutWindow();
+    })
+
     return (
         <div className="flex h-screen bg-gray-100">
-            <Sidebar />
+            <Sidebar/>
             <div className="flex flex-col flex-1 overflow-hidden">
                 {/* 顶部用户信息栏 */}
                 <Header userInfo={userInfo} onLogout={onLogout}/>

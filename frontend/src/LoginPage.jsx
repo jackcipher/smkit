@@ -37,7 +37,7 @@ function LoginPage({ onLogin }) {
 
     return (
         // Main container: Center, max width, padding, background, rounded corners, shadow
-        <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+        <div className="dragable max-w-md mx-auto mt-10 p-6 ">
             {/* Heading: Large text, bold, centered, bottom margin */}
             <h1 className="text-2xl font-bold text-center mb-6">获取 SID</h1> {/* Updated text */}
 

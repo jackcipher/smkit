@@ -1,5 +1,4 @@
 import {useEffect, useRef, useState} from "react";
-import "./header.css"
 import {WindowToggleMaximise} from "../../../wailsjs/runtime/runtime.js";
 function Header({userInfo, onLogout }) {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -55,12 +54,12 @@ function Header({userInfo, onLogout }) {
                 </div>
                 {menuOpen && (
                     <div
-                        className="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-10 border border-gray-200">
+                        className="absolute cursor-pointer right-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-10 border border-gray-200">
                         <button
                             onClick={onLogout}
-                            className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-150"
+                            className="w-full cursor-pointer text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-150"
                         >
-                            Logout
+                            退出登录
                         </button>
                     </div>
                 )}

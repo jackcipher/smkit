@@ -1,18 +1,13 @@
 // src/App.js
-import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Me } from '../wailsjs/go/main/App.js'; // <-- 保持不变
+import {useEffect, useState} from 'react';
+import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
+import {Me} from '../wailsjs/go/main/App.js'; // <-- 保持不变
 // 导入我们创建的 localStorage 工具函数
-import {
-    getAuthToken,
-    getUserInfo,
-    setAuthToken,
-    setUserInfo,
-    clearAuthStorage
-} from './utils/localStorage';
+import {clearAuthStorage, getAuthToken, getUserInfo, setAuthToken, setUserInfo} from './utils/localStorage';
 
 import LoginPage from './LoginPage';
 import MainLayout from "./components/Layout/MainLayout.jsx";
+import {SetLoginWindow} from "./utils/window.js";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -89,6 +84,7 @@ function App() {
 
     const handleLogout = () => {
         // Use utility function to clear storage
+        SetLoginWindow();
         clearAuthStorage();
         setUserInfoState(null); // Update state
         setIsAuthenticated(false);
@@ -102,8 +98,10 @@ function App() {
             <div className="flex items-center justify-center min-h-screen bg-gray-100">
                 <div className="text-center text-gray-600">
                     {/* Add a spinner or better loading UI if desired */}
-                    <svg className="animate-spin h-8 w-8 text-blue-500 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <svg className="animate-spin h-8 w-8 text-blue-500 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg"
+                         fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0H4z"></path>
                     </svg>
                     Loading...
@@ -119,21 +117,21 @@ function App() {
                     path="/login"
                     element={
                         isAuthenticated ?
-                            <Navigate to="/" replace /> :
-                            <LoginPage onLogin={handleLogin} />
+                            <Navigate to="/" replace/> :
+                            <LoginPage onLogin={handleLogin}/>
                     }
                 />
                 <Route
                     path="/"
                     element={
                         isAuthenticated ?
-                            <MainLayout userInfo={userInfo} onLogout={handleLogout} /> :
-                            <Navigate to="/login" replace />
+                            <MainLayout userInfo={userInfo} onLogout={handleLogout}/> :
+                            <Navigate to="/login" replace/>
                     }
                 >
-                    <Route path="/" element={<div>home</div>} />
-                    <Route path="/downloads" element={<div>downloads</div>} />
-                    <Route path="/settings" element={<div>setting</div>} />
+                    <Route path="/" element={<div>home</div>}/>
+                    <Route path="/downloads" element={<div>downloads</div>}/>
+                    <Route path="/settings" element={<div>setting</div>}/>
                 </Route>
             </Routes>
         </Router>

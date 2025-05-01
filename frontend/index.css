@@ -4,3 +4,8 @@ html,body {
     padding: 0;
     margin:0;
 }
+
+.dragable {
+    --wails-draggable:drag;
+    user-select: none;
+}
