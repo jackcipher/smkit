@@ -1,46 +1,22 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { HardDrive, Download, Settings, ChevronRight, ChevronLeft } from 'lucide-react';
+import * as LucidIcons from 'lucide-react';
+import {routerConfig} from "../../routes.js";
+
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(true);
 
-    const toggleSidebar = () => {
-        setCollapsed(!collapsed);
+    // 根据字符串加载 icon
+    const renderIcon = (iconName) => {
+        const Icon = LucidIcons[iconName];
+        return Icon ? <Icon /> : null;
     };
-
-    const menuItems = [
-        {
-            path: '/',
-            name: '网盘文件',
-            icon: <HardDrive />
-        },
-        {
-            path: '/downloads',
-            name: '下载管理',
-            icon: <Download />
-        },
-        {
-            path: '/settings',
-            name: '全局设置',
-            icon: <Settings />
-        }
-    ];
 
     return (
         <div className={`bg-gray-800 pt-10 text-white min-h-screen transition-all duration-300 ${collapsed ? 'w-20' : 'w-64'}`}>
-            {/*<div className="flex justify-between items-center p-4 border-b border-gray-700">*/}
-            {/*    <h2 className={`font-bold text-xl ${collapsed ? 'hidden' : 'block'}`}>我的云盘</h2>*/}
-            {/*    <button*/}
-            {/*        onClick={toggleSidebar}*/}
-            {/*        className="p-2 rounded-full hover:bg-gray-700 transition-colors"*/}
-            {/*    >*/}
-            {/*        {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}*/}
-            {/*    </button>*/}
-            {/*</div>*/}
-
             <div className="mt-6">
-                {menuItems.map((item) => (
+                {routerConfig.map((item)=>(
                     <NavLink
                         to={item.path}
                         key={item.path}
@@ -52,8 +28,8 @@ const Sidebar = () => {
                             }`
                         }
                     >
-                        <div className="flex-shrink-0">{item.icon}</div>
-                        {!collapsed && <span>{item.name}</span>}
+                        <div className="flex-shrink-0">{renderIcon(item.icon)}</div>
+                        {!collapsed && <span>{item.label}</span>}
                     </NavLink>
                 ))}
             </div>

@@ -1,5 +1,5 @@
 // src/App.js
-import {useEffect, useState} from 'react';
+import React, {lazy, Suspense, useEffect, useState} from 'react';
 import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
 import {Me} from '../wailsjs/go/main/App.js'; // <-- 保持不变
 // 导入我们创建的 localStorage 工具函数
@@ -8,6 +8,7 @@ import {clearAuthStorage, getAuthToken, getUserInfo, setAuthToken, setUserInfo} 
 import LoginPage from './LoginPage';
 import MainLayout from "./components/Layout/MainLayout.jsx";
 import {SetLoginWindow} from "./utils/window.js";
+import {routerConfig} from "./routes.js";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -129,9 +130,16 @@ function App() {
                             <Navigate to="/login" replace/>
                     }
                 >
-                    <Route path="/" element={<div>home</div>}/>
-                    <Route path="/downloads" element={<div>downloads</div>}/>
-                    <Route path="/settings" element={<div>setting</div>}/>
+                    {routerConfig && routerConfig.map(v => (
+                        <Route
+                            key={v.path}
+                            path={v.path}
+                            element={<Suspense fallback={<div>Loading...</div>}>
+                                {React.createElement(lazy(() => import(v.page)))}
+                            </Suspense>}
+                        />
+                    ))}
+
                 </Route>
             </Routes>
         </Router>
