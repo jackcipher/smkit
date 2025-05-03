@@ -1,6 +1,8 @@
 const AUTH_TOKEN_KEY = 'authToken';
 const USER_INFO_KEY = 'userInfo';
 
+export default AUTH_TOKEN_KEY;
+
 /**
  * 获取存储在 localStorage 中的认证 token
  * @returns {string | null} 返回 token 字符串或 null (如果不存在)
